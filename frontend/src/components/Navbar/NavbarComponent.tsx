@@ -10,14 +10,98 @@ import {
   NavbarBrand,
   NavbarContent,
   NavbarItem,
+  NavbarMenu,
+  NavbarMenuItem,
+  NavbarMenuToggle,
 } from "@nextui-org/react";
+import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 
 export default function NavbarComponent() {
   const location = useLocation();
   const user = null;
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
-  return (
+  const resizeListener = () => {
+    setIsMobile(window.innerWidth < 768);
+  };
+
+  useEffect(() => {
+    window.addEventListener("resize", resizeListener);
+    return () => {
+      window.removeEventListener("resize", resizeListener);
+    };
+  }, []);
+
+  const menuItems = user
+    ? [
+        "Home",
+        "Service",
+        "Contact Us",
+        "My Profile",
+        "My Appointments",
+        "Log Out",
+      ]
+    : ["Home", "Service", "Contact Us"];
+
+  return isMobile ? (
+    <Navbar onMenuOpenChange={setIsMenuOpen}>
+      <NavbarContent>
+        <NavbarMenuToggle
+          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+          className="sm:hidden"
+        />
+        <NavbarBrand>
+          <img src="../../../public/smartcare.svg" alt="" className="w-10/12" />
+          <p className="marck-script-regular text-[#222C8D] md:text-3xl text-2xl lg:text-4xl">
+            Smart<span className="text-[#3B37D7]">Care</span>
+          </p>
+        </NavbarBrand>
+      </NavbarContent>
+      <NavbarContent justify="end">
+        <NavbarItem>
+          <Link
+            href="#"
+            className={
+              location.pathname === "/contact-us"
+                ? "text-navPrimary"
+                : "text-black"
+            }
+          >
+            Sign Up
+          </Link>
+        </NavbarItem>
+        <NavbarItem>
+          <Button
+            as={Link}
+            href="#"
+            className="btn bg-navPrimary text-white rounded-md hover:bg-gray-400
+                hover:text-black"
+          >
+            Login
+          </Button>
+        </NavbarItem>
+      </NavbarContent>
+      <NavbarMenu>
+        {menuItems.map((item, index) => (
+          <NavbarMenuItem key={`${item}-${index}`}>
+            <Link
+              className="w-full text-black hover:text-navPrimary"
+              href={
+                item === "Home"
+                  ? "/"
+                  : `/${item.toLowerCase().replace(" ", "-")}`
+              }
+              size="lg"
+            >
+              {item}
+            </Link>
+          </NavbarMenuItem>
+        ))}
+      </NavbarMenu>
+    </Navbar>
+  ) : (
     <Navbar
       maxWidth="full"
       shouldHideOnScroll
