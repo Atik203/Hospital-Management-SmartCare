@@ -1,3 +1,14 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@import url("https://fonts.googleapis.com/css2?family=Marck+Script&display=swap");
+
+.marck-script-regular {
+  font-family: "Marck Script", cursive;
+  font-weight: 400;
+  font-style: normal;
+  text-transform: capitalize;
+  line-height: normal;
+  letter-spacing: -4.05px;
+}
