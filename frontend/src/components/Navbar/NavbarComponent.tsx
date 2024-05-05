@@ -44,7 +44,7 @@ export default function NavbarComponent() {
     : ["Home", "Service", "Contact Us"];
 
   return isMobile ? (
-    <Navbar position="static" onMenuOpenChange={setIsMenuOpen}>
+    <Navbar className="" position="static" onMenuOpenChange={setIsMenuOpen}>
       <NavbarContent>
         <NavbarMenuToggle
           aria-label={isMenuOpen ? "Close menu" : "Open menu"}
@@ -108,7 +108,7 @@ export default function NavbarComponent() {
     <Navbar
       position="static"
       maxWidth="full"
-      className="py-3 mx-0"
+      className="py-3 mx-0 bg-[#ECECEC]"
       classNames={{
         item: [
           "flex",

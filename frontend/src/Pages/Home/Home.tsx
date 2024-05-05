@@ -3,9 +3,9 @@ import Banner from "../../components/Banner/Banner";
 
 const Home = () => {
   return (
-    <div className="">
+    <div className="bg-[#ECECEC]">
       <Helmet>
-        <title>Home Page</title>
+        <title>Home</title>
         <meta name="description" content="Home Page" />
       </Helmet>
       <Banner></Banner>
