@@ -44,7 +44,11 @@ export default function NavbarComponent() {
     : ["Home", "Service", "Contact Us"];
 
   return isMobile ? (
-    <Navbar className="" position="static" onMenuOpenChange={setIsMenuOpen}>
+    <Navbar
+      className="bg-[#ECECEC]"
+      position="static"
+      onMenuOpenChange={setIsMenuOpen}
+    >
       <NavbarContent>
         <NavbarMenuToggle
           aria-label={isMenuOpen ? "Close menu" : "Open menu"}

@@ -1,4 +1,4 @@
-import { Input } from "@nextui-org/react";
+import { Button, Input } from "@nextui-org/react";
 import { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
@@ -14,7 +14,9 @@ type FormData = {
 };
 
 const SignUp = () => {
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState<boolean>(false);
+  const [password, setPassword] = useState<string>("");
+  const [confirmPassword, setConfirmPassword] = useState<string>("");
 
   const {
     register,
@@ -24,20 +26,24 @@ const SignUp = () => {
   const onSubmit = handleSubmit((data) => console.log(data));
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen my-12">
       <Helmet>
         <title>Sign Up</title>
       </Helmet>
-
-      <form onSubmit={onSubmit} className="max-w-xl mx-auto space-y-10">
+      <h1 className="text-center font-bold text-2xl md:text-4xl">Sign Up</h1>
+      <form
+        onSubmit={onSubmit}
+        className="max-w-sm mt-12 md:max-w-xl mx-auto space-y-10"
+      >
         <Input
           label="User Name"
           className="font-bold"
           radius="full"
+          isRequired
           isClearable
           maxLength={20}
           classNames={{
-            label: "ml-2",
+            label: "ml-2 no-asterisk",
             errorMessage: "text-red-500 text-sm px-3",
             input: "bg-white",
             inputWrapper: "bg-white",
@@ -54,6 +60,7 @@ const SignUp = () => {
           className="font-bold my-2"
           radius="full"
           isClearable
+          isRequired
           variant="bordered"
           size="lg"
           maxLength={100}
@@ -61,7 +68,7 @@ const SignUp = () => {
           {...register("fullName", { required: true })}
           placeholder="Enter your full name"
           classNames={{
-            label: "ml-2",
+            label: "ml-2 no-asterisk",
             errorMessage: "text-red-500 text-sm px-3",
             input: "bg-white",
             inputWrapper: "bg-white",
@@ -72,6 +79,7 @@ const SignUp = () => {
           className="font-bold my-2"
           radius="full"
           isClearable
+          isRequired
           variant="bordered"
           size="lg"
           type="email"
@@ -80,7 +88,7 @@ const SignUp = () => {
           {...register("email", { required: true })}
           placeholder="Enter your email address"
           classNames={{
-            label: "ml-2",
+            label: "ml-2 no-asterisk",
             errorMessage: "text-red-500 text-sm px-3",
             input: "bg-white",
             inputWrapper: "bg-white",
@@ -91,6 +99,7 @@ const SignUp = () => {
           className="font-bold my-2 rounded-[136px]"
           radius="full"
           isClearable
+          isRequired
           variant="bordered"
           size="lg"
           type="tel"
@@ -102,7 +111,7 @@ const SignUp = () => {
           })}
           placeholder="Enter your phone number"
           classNames={{
-            label: "ml-2",
+            label: "ml-2 no-asterisk",
             errorMessage: "text-red-500 text-sm px-3",
             input: "bg-white",
             inputWrapper: "bg-white",
@@ -113,6 +122,7 @@ const SignUp = () => {
           className="font-bold my-2 rounded-[136px]"
           radius="full"
           isClearable
+          isRequired
           variant="bordered"
           size="lg"
           labelPlacement="outside"
@@ -121,7 +131,7 @@ const SignUp = () => {
           })}
           placeholder="Enter your Address"
           classNames={{
-            label: "ml-2",
+            label: "ml-2 no-asterisk",
             errorMessage: "text-red-500 text-sm px-3",
             input: "bg-white",
             inputWrapper: "bg-white",
@@ -133,13 +143,14 @@ const SignUp = () => {
           radius="full"
           variant="bordered"
           size="lg"
+          isRequired
           labelPlacement="outside"
           {...register("password", {
             required: true,
           })}
           placeholder="Enter your password"
           classNames={{
-            label: "ml-2",
+            label: "ml-2 no-asterisk",
             errorMessage: "text-red-500 text-sm px-3",
             input: "bg-white",
             inputWrapper: "bg-white",
@@ -148,10 +159,8 @@ const SignUp = () => {
             <button
               className=""
               type="button"
-              onClick={(e) => {
-                e.preventDefault();
+              onClick={() => {
                 setIsVisible(!isVisible);
-                console.log(isVisible);
               }}
             >
               {isVisible ? (
@@ -162,7 +171,43 @@ const SignUp = () => {
             </button>
           }
           type={isVisible ? "text" : "password"}
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
         />
+        <Input
+          label="Confirm Password"
+          className="font-bold my-2 rounded-[136px]"
+          radius="full"
+          variant="bordered"
+          size="lg"
+          isRequired
+          labelPlacement="outside"
+          {...register("confirmPassword", {
+            required: true,
+          })}
+          placeholder="Confirm your password"
+          classNames={{
+            label: "ml-2 no-asterisk",
+            errorMessage: "text-red-500 text-sm px-3",
+            input: "bg-white",
+            inputWrapper: "bg-white",
+          }}
+          type="password"
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
+        />
+
+        <Button
+          type="submit"
+          isDisabled={
+            password === "" ||
+            confirmPassword === "" ||
+            password !== confirmPassword
+          }
+          className="w-32 font-bold h-12 mx-auto bg-[#06ABA1] text-white rounded-full flex items-center hover:bg-gray-300 hover:text-black"
+        >
+          Sign Up
+        </Button>
       </form>
     </div>
   );

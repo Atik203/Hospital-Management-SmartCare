@@ -5,3 +5,6 @@
 :root {
   background: #ececec;
 }
+.no-asterisk:after {
+  content: none !important;
+}
