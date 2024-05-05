@@ -1,11 +1,9 @@
 import {
   Avatar,
-  Button,
   Dropdown,
   DropdownItem,
   DropdownMenu,
   DropdownTrigger,
-  Link,
   Navbar,
   NavbarBrand,
   NavbarContent,
@@ -15,7 +13,7 @@ import {
   NavbarMenuToggle,
 } from "@nextui-org/react";
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { Link as RouterLink, useLocation } from "react-router-dom";
 
 export default function NavbarComponent() {
   const location = useLocation();
@@ -46,66 +44,71 @@ export default function NavbarComponent() {
     : ["Home", "Service", "Contact Us"];
 
   return isMobile ? (
-    <Navbar onMenuOpenChange={setIsMenuOpen}>
+    <Navbar position="static" onMenuOpenChange={setIsMenuOpen}>
       <NavbarContent>
         <NavbarMenuToggle
           aria-label={isMenuOpen ? "Close menu" : "Open menu"}
           className="sm:hidden"
         />
         <NavbarBrand>
-          <img src="../../../public/smartcare.svg" alt="" className="w-10/12" />
-          <p className="marck-script-regular text-[#222C8D] md:text-3xl text-2xl lg:text-4xl">
-            Smart<span className="text-[#3B37D7]">Care</span>
-          </p>
+          <RouterLink to="/" className="flex items-center">
+            <img
+              src="../../../public/smartcare.svg"
+              alt=""
+              className="w-10/12"
+            />
+            <p className="marck-script-regular text-[#222C8D] md:text-3xl text-2xl lg:text-4xl">
+              Smart<span className="text-[#3B37D7]">Care</span>
+            </p>
+          </RouterLink>
         </NavbarBrand>
       </NavbarContent>
       <NavbarContent justify="end">
         <NavbarItem>
-          <Link
-            href="#"
+          <RouterLink
+            to={"/sign-up"}
             className={
-              location.pathname === "/contact-us"
+              location.pathname === "/sign-up"
                 ? "text-navPrimary"
                 : "text-black"
             }
           >
             Sign Up
-          </Link>
+          </RouterLink>
         </NavbarItem>
         <NavbarItem>
-          <Button
-            as={Link}
-            href="#"
-            className="btn bg-navPrimary text-white rounded-md hover:bg-gray-400
+          <RouterLink to="/login">
+            <button
+              className="btn bg-navPrimary text-white rounded-md px-3 hover:bg-gray-400
                 hover:text-black"
-          >
-            Login
-          </Button>
+            >
+              Login
+            </button>
+          </RouterLink>
         </NavbarItem>
       </NavbarContent>
       <NavbarMenu>
         {menuItems.map((item, index) => (
           <NavbarMenuItem key={`${item}-${index}`}>
-            <Link
+            <RouterLink
               className="w-full text-black hover:text-navPrimary"
-              href={
+              to={
                 item === "Home"
                   ? "/"
                   : `/${item.toLowerCase().replace(" ", "-")}`
               }
-              size="lg"
             >
               {item}
-            </Link>
+            </RouterLink>
           </NavbarMenuItem>
         ))}
       </NavbarMenu>
     </Navbar>
   ) : (
     <Navbar
+      position="static"
       maxWidth="full"
-      shouldHideOnScroll
-      className="py-4 mx-0"
+      className="py-3 mx-0"
       classNames={{
         item: [
           "flex",
@@ -124,25 +127,27 @@ export default function NavbarComponent() {
       }}
     >
       <NavbarBrand>
-        <img src="../../../public/smartcare.svg" alt="" />
-        <p className="marck-script-regular text-[#222C8D] md:text-3xl text-2xl lg:text-4xl">
-          Smart<span className="text-[#3B37D7]">Care</span>
-        </p>
+        <RouterLink to="/" className="flex items-center gap-1">
+          <img src="../../../public/smartcare.svg" alt="" />
+          <p className="marck-script-regular text-[#222C8D] md:text-3xl text-2xl lg:text-4xl">
+            Smart<span className="text-[#3B37D7]">Care</span>
+          </p>
+        </RouterLink>
       </NavbarBrand>
       <NavbarContent className="hidden sm:flex gap-6 text-xl" justify="end">
         <NavbarItem isActive={location.pathname === "/"}>
-          <Link
-            href="/"
+          <RouterLink
+            to={"/"}
             className={
               location.pathname === "/" ? "text-navPrimary" : "text-black"
             }
           >
             Home
-          </Link>
+          </RouterLink>
         </NavbarItem>
         <NavbarItem isActive={location.pathname === "/service"}>
-          <Link
-            href="/service"
+          <RouterLink
+            to={"/service"}
             className={
               location.pathname === "/service"
                 ? "text-navPrimary"
@@ -150,11 +155,11 @@ export default function NavbarComponent() {
             }
           >
             Service
-          </Link>
+          </RouterLink>
         </NavbarItem>
         <NavbarItem isActive={location.pathname === "/contact-us"}>
-          <Link
-            href="/contact-us"
+          <RouterLink
+            to={"/contact-us"}
             className={
               location.pathname === "/contact-us"
                 ? "text-navPrimary"
@@ -162,7 +167,7 @@ export default function NavbarComponent() {
             }
           >
             Contact Us
-          </Link>
+          </RouterLink>
         </NavbarItem>
 
         {user ? (
@@ -193,26 +198,26 @@ export default function NavbarComponent() {
         ) : (
           <div className="flex items-center justify-end gap-6">
             <NavbarItem>
-              <Link
-                href="#"
+              <RouterLink
+                to={"/sign-up"}
                 className={
-                  location.pathname === "/contact-us"
+                  location.pathname === "/sign-up"
                     ? "text-navPrimary"
                     : "text-black"
                 }
               >
                 Sign Up
-              </Link>
+              </RouterLink>
             </NavbarItem>
             <NavbarItem>
-              <Button
-                as={Link}
-                href="#"
-                className="btn bg-navPrimary text-white rounded-md text-lg px-2 hover:bg-gray-400
+              <RouterLink to={"/login"}>
+                <button
+                  className="btn bg-navPrimary text-white rounded-md text-lg px-5 hover:bg-gray-400
                 hover:text-black"
-              >
-                Login
-              </Button>
+                >
+                  Login
+                </button>
+              </RouterLink>
             </NavbarItem>
           </div>
         )}
