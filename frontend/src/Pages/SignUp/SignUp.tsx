@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
 import { FaEye, FaEyeSlash } from "react-icons/fa6";
+import { Link } from "react-router-dom";
 type FormData = {
   userName: string;
   fullName: string;
@@ -209,6 +210,17 @@ const SignUp = () => {
           Sign Up
         </Button>
       </form>
+      <div className="my-3 space-y-3">
+        <p className="text-gray-800 text-center">
+          Already have an account?{" "}
+          <Link
+            to={"/login"}
+            className="text-red-500 hover:underline hover:text-red-800"
+          >
+            Login
+          </Link>
+        </p>
+      </div>
     </div>
   );
 };
