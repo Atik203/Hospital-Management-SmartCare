@@ -12,7 +12,7 @@ const Banner = () => {
       )}
       <div
         className="md:relative py-4 md:p-0 w-full md:h-[348px] lg:h-[500px] flex flex-col-reverse md:flex-row justify-center gap-6 bg-cover bg-center"
-        style={{ backgroundImage: `url('../../../public/bannerSvg.svg')` }}
+        style={{ backgroundImage: `url('/bannerSvg.svg')` }}
       >
         <div className=" md:w-1/2 p-3 my-auto md:p-4 lg:p-8">
           <h1 className="text-navPrimary font-extrabold text-3xl md:text-4xl lg:text-5xl">
@@ -27,7 +27,7 @@ const Banner = () => {
         </div>
         <div className="md:relative md:w-1/2 md:-mt-[7px] lg:mt-[9px]">
           <img
-            src="../../../public/banner.png"
+            src="/banner.png"
             alt=""
             className="md:absolute md:-top-20 lg:-top-40 w-10/12 mx-auto md:w-full lg:w-11/12"
           />
