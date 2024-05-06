@@ -14,11 +14,7 @@ const Login = () => {
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const [password, setPassword] = useState<string>("");
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FormData>();
+  const { register, handleSubmit } = useForm<FormData>();
   const onSubmit = handleSubmit((data) => console.log(data));
 
   return (
