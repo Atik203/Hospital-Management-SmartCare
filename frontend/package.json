@@ -12,6 +12,7 @@
   "dependencies": {
     "@nextui-org/react": "^2.3.6",
     "@reduxjs/toolkit": "^2.2.3",
+    "@vercel/speed-insights": "^1.0.10",
     "axios": "^1.6.8",
     "framer-motion": "^11.1.7",
     "localforage": "^1.10.0",
