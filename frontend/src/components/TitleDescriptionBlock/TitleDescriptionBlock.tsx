@@ -9,7 +9,7 @@ const TitleDescriptionBlock: React.FC<BlockProps> = ({
   description,
 }) => {
   return (
-    <div className="grid grid-cols-12 md:mb-12">
+    <div className="grid grid-cols-12 my-4 md:mb-12">
       <div className="col-span-12 lg:col-span-6 lg:col-start-4 text-center">
         <h2 className="text-3xl text-navPrimary leading-none md:text-[45px] font-bold mb-6">
           {title}

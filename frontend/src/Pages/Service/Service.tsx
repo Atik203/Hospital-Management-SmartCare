@@ -21,7 +21,7 @@ const Service = () => {
     return <ErrorComponent message={error.message} />;
   }
   return (
-    <div>
+    <div className="mx-auto my-10 md:my-16">
       <Helmet>
         <title>Service</title>
       </Helmet>
