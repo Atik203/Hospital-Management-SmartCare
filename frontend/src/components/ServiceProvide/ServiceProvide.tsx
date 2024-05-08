@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { Navigation, Pagination, Virtual } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
+import useDeviceDetect from "../../Hooks/useDeviceDetect";
 import { useGetServicesQuery } from "../../redux/api/baseApi";
 import CardSkeleton from "../CardSkeleton/CardSkeleton";
 import ErrorComponent from "../ErrorComponent/ErrorComonent";
@@ -11,29 +11,8 @@ import ServiceCard from "../ServiceCard/ServiceCard";
 import TitleDescriptionBlock from "../TitleDescriptionBlock/TitleDescriptionBlock";
 
 const ServiceProvide = () => {
+  const { isDesktop, isTablet } = useDeviceDetect();
   const { data: slides, isFetching, isLoading, error } = useGetServicesQuery();
-
-  const [isDesktop, setIsDesktop] = useState(
-    window.matchMedia("(min-width: 768px)").matches
-  );
-  const [isTablet, setIsTablet] = useState(
-    window.matchMedia("(min-width: 480px)").matches
-  );
-
-  useEffect(() => {
-    const handleResize = () => {
-      const width = window.innerWidth;
-      setIsDesktop(width >= 1024);
-      setIsTablet(width >= 768 && width < 1024);
-    };
-
-    window.addEventListener("resize", handleResize);
-
-    // Clean up event listener on unmount
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
 
   const slidesPerView = isDesktop ? 3 : isTablet ? 2 : 1;
 
