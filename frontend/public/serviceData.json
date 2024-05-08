@@ -1,0 +1,44 @@
+[
+  {
+    "id": 1,
+    "title": "Surgery",
+    "image": "https://i.ibb.co/kmjjX1Q/img1.jpg",
+    "description": "Surgery is a medical specialty that uses operative manual and instrumental techniques on a person to investigate or treat a pathological condition such as a disease or injury, to help improve bodily function or appearance or to repair unwanted ruptured areas.",
+    "price": 300
+  },
+  {
+    "id": 2,
+    "title": "Bones treatments",
+    "image": "https://i.ibb.co/Q9HBYXd/img2.jpg",
+    "description": "Orthopedic surgery or orthopedics, also spelled orthopaedics, is the branch of surgery concerned with conditions involving the musculoskeletal system. Orthopedic surgeons use both surgical and nonsurgical means to treat musculoskeletal trauma, spine diseases, sports injuries, degenerative diseases, infections, tumors, and congenital disorders.",
+    "price": 200
+  },
+  {
+    "id": 3,
+    "title": "Diagnosis",
+    "image": "https://i.ibb.co/jy19Y0k/img3.jpg",
+    "description": "Medical diagnosis is the process of determining which disease or condition explains a person's symptoms and signs. It is most often referred to as diagnosis with the medical context being implicit. The information required for diagnosis is typically collected from a history and physical examination of the person seeking medical care.",
+    "price": 100
+  },
+  {
+    "id": 4,
+    "title": "Surgery",
+    "image": "https://i.ibb.co/kmjjX1Q/img1.jpg",
+    "description": "Surgery is a medical specialty that uses operative manual and instrumental techniques on a person to investigate or treat a pathological condition such as a disease or injury, to help improve bodily function or appearance or to repair unwanted ruptured areas.",
+    "price": 300
+  },
+  {
+    "id": 5,
+    "title": "Bones treatments",
+    "image": "https://i.ibb.co/Q9HBYXd/img2.jpg",
+    "description": "Orthopedic surgery or orthopedics, also spelled orthopaedics, is the branch of surgery concerned with conditions involving the musculoskeletal system. Orthopedic surgeons use both surgical and nonsurgical means to treat musculoskeletal trauma, spine diseases, sports injuries, degenerative diseases, infections, tumors, and congenital disorders.",
+    "price": 200
+  },
+  {
+    "id": 6,
+    "title": "Diagnosis",
+    "image": "https://i.ibb.co/jy19Y0k/img3.jpg",
+    "description": "Medical diagnosis is the process of determining which disease or condition explains a person's symptoms and signs. It is most often referred to as diagnosis with the medical context being implicit. The information required for diagnosis is typically collected from a history and physical examination of the person seeking medical care.",
+    "price": 100
+  }
+]
