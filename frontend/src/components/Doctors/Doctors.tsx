@@ -1,15 +1,23 @@
-import { Input, Listbox, ListboxItem } from "@nextui-org/react";
+import {
+  cn,
+  Input,
+  Listbox,
+  ListboxItem,
+  Pagination,
+  PaginationItemType,
+} from "@nextui-org/react";
 import { Selection } from "@react-types/shared";
 import { useMemo, useState } from "react";
 import { FaFilter } from "react-icons/fa";
 import { IoSearchCircleOutline } from "react-icons/io5";
+import { useGetDoctorsQuery } from "../../redux/api/baseApi";
+import { doctorData } from "../../types/doctorData";
+import { ChevronIcon } from "../ChevronIcon/ChevronIcon";
+import DoctorCard from "../DoctorCard/DoctorCard";
 import { ListboxWrapper } from "../ListBoxWrapper/ListBoxWrapper";
-
 const Doctors = () => {
   const filters: string[] = ["Name", "Designation", "Specialization"];
-
-  const [selectedKeys, setSelectedKeys] = useState(new Set(["text"]));
-
+  const [selectedKeys, setSelectedKeys] = useState(new Set(["Filter Doctors"]));
   const selectedValue = useMemo(
     () => Array.from(selectedKeys).join(", "),
     [selectedKeys]
@@ -20,6 +28,76 @@ const Doctors = () => {
       newKeys.add(String(key));
     }
     setSelectedKeys(newKeys);
+  };
+
+  const { data, error, isFetching, isLoading } = useGetDoctorsQuery();
+
+  const doctorData: doctorData | undefined = data;
+  const doctors = doctorData?.results ?? [];
+  const nextUrl: string = doctorData?.next;
+
+  const renderItem = ({
+    ref,
+    key,
+    value,
+    isActive,
+    onNext,
+    onPrevious,
+    setPage,
+    className,
+  }) => {
+    if (value === PaginationItemType.NEXT) {
+      return (
+        <button
+          key={key}
+          className={cn(
+            className,
+            "bg-[#D9D9D9] text-[#5D94A6] min-w-12 w-12 h-12"
+          )}
+          onClick={onNext}
+        >
+          <ChevronIcon className="rotate-180" />
+        </button>
+      );
+    }
+
+    if (value === PaginationItemType.PREV) {
+      return (
+        <button
+          key={key}
+          className={cn(
+            className,
+            "bg-[#D9D9D9] text-[#5D94A6] min-w-12  w-12 h-12"
+          )}
+          onClick={onPrevious}
+        >
+          <ChevronIcon />
+        </button>
+      );
+    }
+
+    if (value === PaginationItemType.DOTS) {
+      return (
+        <button key={key} className={className}>
+          ...
+        </button>
+      );
+    }
+
+    // cursor is the default item
+    return (
+      <button
+        key={key}
+        ref={ref}
+        className={cn(
+          className,
+          isActive && "text-black bg-[#72aeaa] text-2xl font-bold"
+        )}
+        onClick={() => setPage(value)}
+      >
+        {value}
+      </button>
+    );
   };
 
   return (
@@ -37,7 +115,7 @@ const Doctors = () => {
             input: "bg-white my-input text-[#E3C3C3]",
             inputWrapper: "bg-white",
           }}
-          placeholder="Filter Doctors"
+          placeholder={`${selectedValue ? selectedValue : "Filter Doctors"}`}
           startContent={<FaFilter size={18} className="text-[#E3C3C3]" />}
           type="search"
         />
@@ -91,7 +169,24 @@ const Doctors = () => {
           type="search"
         />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-center justify-center gap-4"></div>
+        <div className="grid grid-cols-1 mt-2 md:grid-cols-2 lg:grid-cols-3 items-center justify-center gap-4">
+          {doctors &&
+            doctors.map((doctor) => (
+              <DoctorCard key={doctor.id} data={doctor} />
+            ))}
+        </div>
+        <div className="mx-auto mt-4 w-full">
+          <Pagination
+            disableCursorAnimation
+            showControls
+            total={10}
+            initialPage={1}
+            className="gap-2 w-full"
+            radius="full"
+            renderItem={renderItem}
+            variant="light"
+          />
+        </div>
       </div>
     </div>
   );
