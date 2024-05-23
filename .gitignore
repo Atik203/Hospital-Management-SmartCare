@@ -1,0 +1,14 @@
+# Ignore virtual environments
+**/venv/
+venv/
+
+# Ignore Node.js dependencies
+**/node_modules/
+node_modules/
+
+# Ignore build directories
+**/dist/
+dist/
+
+# Editor directories and files
+.vscode/
