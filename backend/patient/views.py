@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import EmailMessage
+from django.shortcuts import redirect
 from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
@@ -44,5 +45,19 @@ class RegistrationViewSet(APIView):
             send_confirm_email(confirm_link,'Confirm Email','confirm_email.html',user.email)
             return Response("Check your email to confirm your account")
         return Response(serializer.errors)
+    
+def activate(request, uidb64, token):
+    try:
+        uid = urlsafe_base64_decode(uidb64).decode()
+        user = User._default_manager.get(pk=uid)
+    except(TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+        
+    if user is not None and default_token_generator.check_token(user, token):
+        user.is_active = True
+        user.save()
+        return redirect("register")
+    else:
+        print("Activation link is invalid")
 
 
