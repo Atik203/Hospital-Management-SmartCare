@@ -1,6 +1,7 @@
 # Ignore virtual environments
 **/venv/
 venv/
+**/.env
 
 # Ignore Node.js dependencies
 **/node_modules/

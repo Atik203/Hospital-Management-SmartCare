@@ -1,3 +1,4 @@
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import EmailMessage
@@ -6,11 +7,13 @@ from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from rest_framework import viewsets
+from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from .models import Patient
-from .serializers import PatientSerializer, RegistrationSerializer
+from .serializers import (LoginSerializer, PatientSerializer,
+                          RegistrationSerializer)
 
 
 def send_confirm_email(confirm_link,subject,template_name,email):
@@ -58,6 +61,30 @@ def activate(request, uidb64, token):
         user.save()
         return redirect("register")
     else:
-        print("Activation link is invalid")
+        return redirect('login')
+
+
+class LoginViewSet(APIView):
+    serializer_class = LoginSerializer
+    def post(self, request):
+        serializer = self.serializer_class(data = request.data)
+        if serializer.is_valid():
+            username = serializer.validated_data['username']
+            password = serializer.validated_data['password']
+            user = authenticate(username = username, password = password)
+            if user:
+                token,_ = Token.objects.get_or_create(user = user)
+                login(request, user)
+                return Response({'token': token.key, 'user': {user.username, user.email}})
+            else:
+                return Response({'error': 'Invalid credentials'})
+        return Response(serializer.errors)
+    
+
+class LogOutViewSet(APIView):
+    def get(self, request):
+        request.user.auth_token.delete()
+        logout(request)
+        return redirect('login')           
 
 
