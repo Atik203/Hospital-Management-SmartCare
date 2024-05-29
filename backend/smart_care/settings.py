@@ -29,7 +29,10 @@ SECRET_KEY = 'django-insecure-5%e%!6r*adxg#k$fga6^6dgq0i#co_3c2(iu#e!zqb=uz-%1mr
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['*'] # all hosts
+
+CSRF_TRUSTED_ORIGINS = ['https://smart-care-backend-3m5c.onrender.com','http://127.0.0.1:8000']
+
 
 
 # Application definition
@@ -133,6 +136,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = 'static/'
+
 
 MEDIA_URL = '/media/'
 
