@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from rest_framework import viewsets
+from rest_framework.permissions import (IsAuthenticated,
+                                        IsAuthenticatedOrReadOnly)
 
 # Create your views here.
 from .models import AvailableTime, Designation, Doctor, Review, Specialization
@@ -27,6 +29,7 @@ class DesignationViewSet(viewsets.ModelViewSet):
 
 
 class AvailableTimeViewSet(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticatedOrReadOnly]
     queryset = AvailableTime.objects.all()
     serializer_class = AvailableTimeSerializer                
 
