@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from rest_framework import viewsets
-from rest_framework.filters import BaseFilterBackend
+from rest_framework.filters import BaseFilterBackend, SearchFilter
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
@@ -20,6 +20,8 @@ class DoctorViewSet(viewsets.ModelViewSet):
     queryset = Doctor.objects.all()
     pagination_class = DoctorPagination
     serializer_class = DoctorSerializer
+    filter_backends = [SearchFilter]
+    search_fields = ['user__first_name', 'specialization__name', 'designation__name', 'available_time__name','user__last_name']
     
 class ReviewViewSet(viewsets.ModelViewSet):
     queryset = Review.objects.all()
