@@ -19,9 +19,10 @@ class PatientSerializer(serializers.ModelSerializer):
 
 class RegistrationSerializer(serializers.ModelSerializer):
     confirm_password = serializers.CharField(required=True)
+    phone = serializers.CharField(required=True)
     class Meta:
         model = User
-        fields = ['username',"first_name",'last_name', 'email', 'password', 'confirm_password']
+        fields = ['username',"first_name",'last_name', 'email', 'password', 'confirm_password', 'phone']
     
     def save(self):
         username = self.validated_data['username']
@@ -30,6 +31,7 @@ class RegistrationSerializer(serializers.ModelSerializer):
         email = self.validated_data['email']
         password = self.validated_data['password']
         confirm_password = self.validated_data['confirm_password']
+        phone = self.validated_data['phone']
         if password != confirm_password:
             raise serializers.ValidationError({'error': 'Passwords do not match'})
         if(User.objects.filter(email = email).exists()):
@@ -40,6 +42,9 @@ class RegistrationSerializer(serializers.ModelSerializer):
         account = User(username = username, email = email, first_name = first_name, last_name = last_name)
         account.set_password(password)
         account.save()
+        
+        patient = Patient(user = account, phone = phone)
+        patient.save()
         return account
 
 class LoginSerializer(serializers.Serializer):

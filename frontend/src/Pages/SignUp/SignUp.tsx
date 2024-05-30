@@ -3,7 +3,9 @@ import { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
 import { FaEye, FaEyeSlash } from "react-icons/fa6";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import axiosPublic from "../../axios/axiosPublic";
 type FormData = {
   userName: string;
   fullName: string;
@@ -15,12 +17,32 @@ type FormData = {
 };
 
 const SignUp = () => {
+  const dispatch = useDispatch();
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
 
   const { register, handleSubmit } = useForm<FormData>();
-  const onSubmit = handleSubmit((data) => console.log(data));
+  const onSubmit = handleSubmit((data) => {
+    const first_name = data.fullName.split(" ")[0];
+    const last_name = data.fullName.split(" ")[1];
+
+    const userData = {
+      ...data,
+      first_name,
+      last_name,
+    };
+
+    console.log(userData);
+    axiosPublic
+      .post("/patient/register/", userData)
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  });
 
   return (
     <div className="min-h-screen my-12">

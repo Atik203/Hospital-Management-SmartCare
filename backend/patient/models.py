@@ -5,7 +5,7 @@ from django.db import models
 # Create your models here.
 class Patient(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='patient/images/')
+    image = models.ImageField(upload_to='patient/images/',null=True, blank=True)
     phone = models.CharField(max_length=11)
     
     def __str__(self):

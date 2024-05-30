@@ -205,7 +205,7 @@ export default function NavbarComponent() {
                 color="secondary"
                 name="Jason Hughes"
                 size="sm"
-                src={image!}
+                src={image || "https://i.pravatar.cc/150?u=a042581f4e29026704d"}
               />
             </DropdownTrigger>
             <DropdownMenu aria-label="Profile Actions" variant="flat">
