@@ -6,7 +6,7 @@ import { ServiceData } from "../../types/serviceData";
 // Define a service using a base URL and expected endpoints
 export const api = createApi({
   reducerPath: "api",
-  baseQuery: fetchBaseQuery(),
+  baseQuery: fetchBaseQuery({ baseUrl: import.meta.env.VITE_BASE_URL }),
   // #TODO have to add the base url {baseUrl: "https://jsonplaceholder.typicode.com/"}
   endpoints: (builder) => ({
     // TODO: have to add endpoints
@@ -14,7 +14,7 @@ export const api = createApi({
       query: () => "/serviceData.json",
     }),
     getDoctors: builder.query<doctorData, void>({
-      query: () => `${import.meta.env.VITE_BASE_URL}/doctor/list`,
+      query: () => `/doctorData.json`,
     }),
   }),
 });

@@ -13,11 +13,30 @@ import {
   NavbarMenuToggle,
 } from "@nextui-org/react";
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link as RouterLink, useLocation } from "react-router-dom";
+import axiosPublic from "../../axios/axiosPublic";
+import { logout, TUser } from "../../redux/features/user/userSLice";
+import { RootState } from "../../redux/store";
 
 export default function NavbarComponent() {
+  const userState = useSelector((state: RootState) => state.user);
+  const dispatch = useDispatch();
+
+  const user: TUser | null = userState.user;
+  let username, first_name, last_name, image, email;
+
+  if (user) {
+    ({ username, first_name, last_name, image, email } = user);
+  }
+
+  const handleLogout = () => {
+    axiosPublic.get("/patient/logout/").then((res) => {
+      dispatch(logout());
+    });
+  };
+
   const location = useLocation();
-  const user = null;
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
@@ -184,18 +203,21 @@ export default function NavbarComponent() {
                 color="secondary"
                 name="Jason Hughes"
                 size="sm"
-                src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
+                src={image!}
               />
             </DropdownTrigger>
             <DropdownMenu aria-label="Profile Actions" variant="flat">
               <DropdownItem key="profile" className="h-14 gap-2">
-                <p className="font-semibold">Signed in as</p>
-                <p className="font-semibold">zoey@example.com</p>
+                <p className="font-bold text-navPrimary">{username}</p>
+                <p className="font-semibold">
+                  {first_name} {last_name}
+                </p>
+                <p className="font-semibold">{email}</p>
               </DropdownItem>
               <DropdownItem key="settings">My Profile</DropdownItem>
               <DropdownItem key="team_settings">My Appointments</DropdownItem>
               <DropdownItem key="logout" color="danger">
-                Log Out
+                <button onClick={handleLogout}>Logout</button>
               </DropdownItem>
             </DropdownMenu>
           </Dropdown>

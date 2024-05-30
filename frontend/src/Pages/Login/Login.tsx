@@ -3,8 +3,10 @@ import { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
 import { FaEye, FaEyeSlash } from "react-icons/fa6";
-import { Link } from "react-router-dom";
-import axiosPublic from "../../axios/baseURL";
+import { useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import axiosPublic from "../../axios/axiosPublic";
+import { login } from "../../redux/features/user/userSLice";
 
 type FormData = {
   userName: string;
@@ -12,6 +14,9 @@ type FormData = {
 };
 
 const Login = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const [password, setPassword] = useState<string>("");
 
@@ -24,7 +29,8 @@ const Login = () => {
     axiosPublic
       .post("/patient/login/", { username: username, password: password })
       .then((res) => {
-        console.log(res.data);
+        dispatch(login(res.data));
+        navigate("/");
       })
       .catch((error) => {
         console.log(error);
