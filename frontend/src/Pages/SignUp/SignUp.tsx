@@ -3,7 +3,8 @@ import { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
 import { FaEye, FaEyeSlash } from "react-icons/fa6";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import axiosPublic from "../../axios/axiosPublic";
 type FormData = {
   username: string;
@@ -16,6 +17,7 @@ type FormData = {
 };
 
 const SignUp = () => {
+  const navigate = useNavigate();
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
@@ -36,11 +38,13 @@ const SignUp = () => {
       confirm_password: data.confirm_password,
     };
 
-    console.log(userData);
     axiosPublic
       .post("/patient/register/", userData)
       .then((res) => {
-        console.log(res.data);
+        if (res.data.success) {
+          toast("Check your email to verify your account");
+          navigate("/login");
+        }
       })
       .catch((err) => {
         console.log(err);
