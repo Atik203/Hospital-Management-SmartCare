@@ -75,7 +75,16 @@ class LoginViewSet(APIView):
             if user:
                 token,_ = Token.objects.get_or_create(user = user)
                 login(request, user)
-                return Response({'token': token.key, 'user': {user.username, user.email}})
+                user_data = {
+                    'username': user.username, 
+                    'email': user.email, 
+                    'first_name': user.first_name, 
+                    'last_name': user.last_name,
+                }
+                if hasattr(user, 'patient') and user.patient is not None:
+                    user_data['phone'] = user.patient.phone
+                    user_data['image'] = request.build_absolute_uri(user.patient.image.url)
+                return Response({'token': token.key, 'user': user_data })
             else:
                 return Response({'error': 'Invalid credentials'})
         return Response(serializer.errors)
@@ -83,8 +92,9 @@ class LoginViewSet(APIView):
 
 class LogOutViewSet(APIView):
     def get(self, request):
-        request.user.auth_token.delete()
-        logout(request)
-        return redirect('login')           
+        if request.user.is_authenticated:
+            request.user.auth_token.delete()
+            logout(request)
+        return Response("Logged out successfully")     
 
 

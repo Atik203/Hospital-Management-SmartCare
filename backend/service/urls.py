@@ -5,7 +5,7 @@ from .views import ServiceViewSet
 
 router = DefaultRouter()
 
-router.register('', ServiceViewSet)
+router.register('list', ServiceViewSet)
 
 urlpatterns =  [
     path('', include(router.urls)),

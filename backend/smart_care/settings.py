@@ -34,7 +34,8 @@ ALLOWED_HOSTS = ['*'] # all hosts
 CSRF_TRUSTED_ORIGINS = ['https://smart-care-backend-3m5c.onrender.com','http://127.0.0.1:8000']
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",  # Replace with the URL of your React app
+    "http://localhost:5173", 
+    "https://smart-care-tau.vercel.app"
 ]
 CORS_ALLOW_CREDENTIALS = True
 # Application definition
