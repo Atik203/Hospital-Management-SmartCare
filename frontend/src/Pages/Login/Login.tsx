@@ -4,6 +4,7 @@ import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
 import { FaEye, FaEyeSlash } from "react-icons/fa6";
 import { Link } from "react-router-dom";
+import axiosPublic from "../../axios/baseURL";
 
 type FormData = {
   userName: string;
@@ -15,7 +16,20 @@ const Login = () => {
   const [password, setPassword] = useState<string>("");
 
   const { register, handleSubmit } = useForm<FormData>();
-  const onSubmit = handleSubmit((data) => console.log(data));
+
+  const onSubmit = handleSubmit((data) => {
+    const username = data.userName;
+    const password = data.password;
+
+    axiosPublic
+      .post("/patient/login/", { username: username, password: password })
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  });
 
   return (
     <div className="min-h-screen my-12">

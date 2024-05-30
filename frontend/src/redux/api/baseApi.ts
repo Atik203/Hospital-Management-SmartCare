@@ -14,7 +14,7 @@ export const api = createApi({
       query: () => "/serviceData.json",
     }),
     getDoctors: builder.query<doctorData, void>({
-      query: () => "https://smart-care.onrender.com/doctor/list/",
+      query: () => `${import.meta.env.VITE_BASE_URL}/doctor/list`,
     }),
   }),
 });
