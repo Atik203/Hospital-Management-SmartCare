@@ -17,6 +17,7 @@ import { ChevronIcon } from "../ChevronIcon/ChevronIcon";
 import DoctorCard from "../DoctorCard/DoctorCard";
 import ErrorComponent from "../ErrorComponent/ErrorComonent";
 import { ListboxWrapper } from "../ListBoxWrapper/ListBoxWrapper";
+
 const Doctors = () => {
   const filters: string[] = ["Name", "Designation", "Specialization"];
   const [selectedKeys, setSelectedKeys] = useState(new Set(["Filter Doctors"]));
@@ -24,6 +25,7 @@ const Doctors = () => {
     () => Array.from(selectedKeys).join(", "),
     [selectedKeys]
   );
+
   const handleSelectionChange = (keys: Selection) => {
     const newKeys = new Set<string>();
     for (const key of keys) {
@@ -32,12 +34,14 @@ const Doctors = () => {
     setSelectedKeys(newKeys);
   };
 
+  const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const { data, error, isFetching, isLoading } =
-    useGetDoctorsQuery(currentPage);
+  const { data, error, isFetching, isLoading } = useGetDoctorsQuery({
+    page: currentPage,
+    search: searchTerm,
+  });
   const doctorData: doctorData | undefined = data;
   if (error instanceof Error) return <ErrorComponent message={error.message} />;
-  console.log(doctorData);
   const doctors = doctorData?.results ?? [];
 
   const renderItem = ({
@@ -150,6 +154,8 @@ const Doctors = () => {
       </div>
       <div className="md:col-span-3">
         <Input
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
           className="mx-auto"
           radius="full"
           variant="bordered"

@@ -13,8 +13,9 @@ export const api = createApi({
     getServices: builder.query<ServiceData, void>({
       query: () => "/service/list/",
     }),
-    getDoctors: builder.query<doctorData, number>({
-      query: (page = 1) => `/doctor/list/?page=${page}`,
+    getDoctors: builder.query<doctorData, { page: number; search: string }>({
+      query: ({ page = 1, search = "" }) =>
+        `/doctor/list/?page=${page}&search=${search}`,
     }),
   }),
 });
