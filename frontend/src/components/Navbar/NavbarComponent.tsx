@@ -16,8 +16,9 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link as RouterLink, useLocation } from "react-router-dom";
 import axiosPublic from "../../axios/axiosPublic";
-import { logout, TUser } from "../../redux/features/user/userSLice";
+import { logout } from "../../redux/features/user/userSLice";
 import { RootState } from "../../redux/store";
+import { TUser } from "../../types/userSateData";
 
 export default function NavbarComponent() {
   const userState = useSelector((state: RootState) => state.user);
@@ -31,6 +32,7 @@ export default function NavbarComponent() {
   }
 
   const handleLogout = () => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     axiosPublic.get("/patient/logout/").then((res) => {
       dispatch(logout());
     });

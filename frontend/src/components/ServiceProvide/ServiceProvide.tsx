@@ -12,7 +12,9 @@ import TitleDescriptionBlock from "../TitleDescriptionBlock/TitleDescriptionBloc
 
 const ServiceProvide = () => {
   const { isDesktop, isTablet } = useDeviceDetect();
-  const { data: slides, isFetching, isLoading, error } = useGetServicesQuery();
+  const { data, isFetching, isLoading, error } = useGetServicesQuery();
+
+  const slides = data?.results;
 
   const slidesPerView = isDesktop ? 3 : isTablet ? 2 : 1;
 

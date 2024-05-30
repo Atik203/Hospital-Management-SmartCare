@@ -1,8 +1,13 @@
 // types/serviceData.ts
-export type ServiceData = {
+export type TServiceData = {
   id: number;
-  title: string;
+  name: string;
   image: string;
   description: string;
-  price: number;
+};
+export type ServiceData = {
+  count: number;
+  next: string | null;
+  previous: string | null;
+  results: TServiceData[];
 };

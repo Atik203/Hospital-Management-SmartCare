@@ -4,6 +4,7 @@ import {
   Listbox,
   ListboxItem,
   Pagination,
+  PaginationItemRenderProps,
   PaginationItemType,
 } from "@nextui-org/react";
 import { Selection } from "@react-types/shared";
@@ -14,6 +15,7 @@ import { useGetDoctorsQuery } from "../../redux/api/baseApi";
 import { doctorData } from "../../types/doctorData";
 import { ChevronIcon } from "../ChevronIcon/ChevronIcon";
 import DoctorCard from "../DoctorCard/DoctorCard";
+import ErrorComponent from "../ErrorComponent/ErrorComonent";
 import { ListboxWrapper } from "../ListBoxWrapper/ListBoxWrapper";
 const Doctors = () => {
   const filters: string[] = ["Name", "Designation", "Specialization"];
@@ -30,22 +32,22 @@ const Doctors = () => {
     setSelectedKeys(newKeys);
   };
 
-  const { data, error, isFetching, isLoading } = useGetDoctorsQuery();
-
+  const [currentPage, setCurrentPage] = useState(1);
+  const { data, error, isFetching, isLoading } =
+    useGetDoctorsQuery(currentPage);
   const doctorData: doctorData | undefined = data;
+  if (error instanceof Error) return <ErrorComponent message={error.message} />;
+  console.log(doctorData);
   const doctors = doctorData?.results ?? [];
-  const nextUrl: string = doctorData?.next;
 
   const renderItem = ({
     ref,
     key,
     value,
     isActive,
-    onNext,
-    onPrevious,
     setPage,
     className,
-  }) => {
+  }: PaginationItemRenderProps) => {
     if (value === PaginationItemType.NEXT) {
       return (
         <button
@@ -54,7 +56,7 @@ const Doctors = () => {
             className,
             "bg-[#D9D9D9] text-[#5D94A6] min-w-12 w-12 h-12"
           )}
-          onClick={onNext}
+          onClick={() => setCurrentPage(currentPage + 1)}
         >
           <ChevronIcon className="rotate-180" />
         </button>
@@ -69,7 +71,7 @@ const Doctors = () => {
             className,
             "bg-[#D9D9D9] text-[#5D94A6] min-w-12  w-12 h-12"
           )}
-          onClick={onPrevious}
+          onClick={() => setCurrentPage(currentPage - 1)}
         >
           <ChevronIcon />
         </button>
@@ -170,7 +172,9 @@ const Doctors = () => {
         />
 
         <div className="grid grid-cols-1 mt-2 md:grid-cols-2 lg:grid-cols-3 items-center justify-center gap-4">
-          {doctors &&
+          {!isFetching &&
+            !isLoading &&
+            doctors &&
             doctors.map((doctor) => (
               <DoctorCard key={doctor.id} data={doctor} />
             ))}
@@ -179,7 +183,7 @@ const Doctors = () => {
           <Pagination
             disableCursorAnimation
             showControls
-            total={10}
+            total={data?.next ? currentPage + 1 : currentPage}
             initialPage={1}
             className="gap-2 w-full"
             radius="full"

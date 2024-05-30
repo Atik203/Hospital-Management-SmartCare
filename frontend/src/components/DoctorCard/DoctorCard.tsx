@@ -1,19 +1,11 @@
 import { Card, CardFooter, Image } from "@nextui-org/react";
+import { TDoctorData } from "../../types/doctorData";
 
-type doctorData = {
-  id: number;
-  user: string;
-  designation: string[];
-  specialization: string[];
-  available_time: string[];
-  image: string;
-  fee: number;
-  meet_link: string;
-};
-type doctorCardProps = {
-  data: doctorData;
-};
-const DoctorCard: React.FC<doctorCardProps> = ({ data }) => {
+interface DoctorCardProps {
+  data: TDoctorData;
+}
+
+const DoctorCard: React.FC<DoctorCardProps> = ({ data }) => {
   return (
     <div>
       <Card className="mx-auto flex flex-col items-center justify-center p-0 m-0">
@@ -31,20 +23,16 @@ const DoctorCard: React.FC<doctorCardProps> = ({ data }) => {
           />
           <CardFooter className="flex-col items-center">
             <h2 className="text-navPrimary uppercase text-center font-bold">
-              {data.user}
+              {data.user.first_name} {data.user.last_name}
             </h2>
-            <p className="text-lg">
-              {data.designation.map((d) => {
-                return d + " ";
+            <p className="text-sm">
+              {data.designation?.map((d) => {
+                return d.name + " ";
               })}
             </p>
-            <div className="items-start space-x-3 mt-1">
-              {data.specialization.map((s) => {
-                return (
-                  <button className="px-1 py-2 rounded-md btn-outline text-sm text-navPrimary border-navPrimary border-2 hover:bg-cyan-200 hover:text-navPrimary">
-                    {s}
-                  </button>
-                );
+            <div className="items-start text-sm mt-1">
+              {data.specialization?.map((s) => {
+                return s.name + " ";
               })}
             </div>
           </CardFooter>

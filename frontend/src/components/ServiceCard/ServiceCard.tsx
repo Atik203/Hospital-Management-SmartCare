@@ -1,16 +1,10 @@
 import { Card, CardFooter, Image } from "@nextui-org/react";
 import { truncate } from "lodash";
 import { FaArrowRight } from "react-icons/fa";
+import { TServiceData } from "../../types/serviceData";
 
-type ServiceData = {
-  id: number;
-  title: string;
-  image: string;
-  description: string;
-  price: number;
-};
 type ServiceCardProps = {
-  data: ServiceData;
+  data: TServiceData;
 };
 const ServiceCard: React.FC<ServiceCardProps> = ({ data }) => {
   return (
@@ -25,11 +19,9 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ data }) => {
             src={`https://app.requestly.io/delay/2000/${data.image}`}
           />
           <CardFooter className="px-2 flex-col items-start">
-            <h2 className="text-navPrimary uppercase font-bold">
-              {data.title}
-            </h2>
+            <h2 className="text-navPrimary uppercase font-bold">{data.name}</h2>
             <p className="text-lg">
-              {truncate(data.description, { length: 80 })}
+              {truncate(data.description, { length: 50 })}
             </p>
             <p className="text-navPrimary font-bold text-lg cursor-pointer">
               Learn More <FaArrowRight className="inline" />

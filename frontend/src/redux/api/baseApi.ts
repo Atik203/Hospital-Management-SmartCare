@@ -10,11 +10,11 @@ export const api = createApi({
   // #TODO have to add the base url {baseUrl: "https://jsonplaceholder.typicode.com/"}
   endpoints: (builder) => ({
     // TODO: have to add endpoints
-    getServices: builder.query<ServiceData[], void>({
-      query: () => "/serviceData.json",
+    getServices: builder.query<ServiceData, void>({
+      query: () => "/service/list/",
     }),
-    getDoctors: builder.query<doctorData, void>({
-      query: () => `/doctorData.json`,
+    getDoctors: builder.query<doctorData, number>({
+      query: (page = 1) => `/doctor/list/?page=${page}`,
     }),
   }),
 });
