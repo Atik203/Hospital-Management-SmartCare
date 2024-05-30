@@ -1,4 +1,4 @@
-export const ChevronIcon = (props) => (
+export const ChevronIcon = (props: React.SVGProps<SVGSVGElement>) => (
   <svg
     aria-hidden="true"
     fill="none"

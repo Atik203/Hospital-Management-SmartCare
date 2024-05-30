@@ -5,6 +5,7 @@ import ServiceCard from "../../components/ServiceCard/ServiceCard";
 import TitleDescriptionBlock from "../../components/TitleDescriptionBlock/TitleDescriptionBlock";
 import useDeviceDetect from "../../Hooks/useDeviceDetect";
 import { useGetServicesQuery } from "../../redux/api/baseApi";
+import { TServiceData } from "../../types/serviceData";
 
 const Service = () => {
   const { isDesktop, isTablet } = useDeviceDetect();
@@ -37,8 +38,8 @@ const Service = () => {
         </div>
       ) : (
         <div className="w-10/12 mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-center justify-center gap-6">
-          {services &&
-            services.map((service) => (
+          {Array.isArray(services) &&
+            services.map((service: TServiceData) => (
               <ServiceCard key={service.id} data={service} />
             ))}
         </div>
