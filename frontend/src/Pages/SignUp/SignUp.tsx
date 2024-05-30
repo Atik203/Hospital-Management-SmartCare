@@ -3,21 +3,19 @@ import { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
 import { FaEye, FaEyeSlash } from "react-icons/fa6";
-import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import axiosPublic from "../../axios/axiosPublic";
 type FormData = {
-  userName: string;
+  username: string;
   fullName: string;
   email: string;
   phone: string;
   address: string;
   password: string;
-  confirmPassword: string;
+  confirm_password: string;
 };
 
 const SignUp = () => {
-  const dispatch = useDispatch();
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
@@ -28,9 +26,14 @@ const SignUp = () => {
     const last_name = data.fullName.split(" ")[1];
 
     const userData = {
-      ...data,
-      first_name,
-      last_name,
+      username: data.username,
+      email: data.email,
+      phone: data.phone,
+      address: data.address,
+      password: data.password,
+      first_name: first_name,
+      last_name: last_name,
+      confirm_password: data.confirm_password,
     };
 
     console.log(userData);
@@ -70,7 +73,7 @@ const SignUp = () => {
           variant="bordered"
           size="lg"
           labelPlacement="outside"
-          {...register("userName", { required: true })}
+          {...register("username", { required: true })}
           placeholder="Enter your user name"
         />
 
@@ -201,7 +204,7 @@ const SignUp = () => {
           size="lg"
           isRequired
           labelPlacement="outside"
-          {...register("confirmPassword", {
+          {...register("confirm_password", {
             required: true,
           })}
           placeholder="Confirm your password"

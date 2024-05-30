@@ -44,7 +44,6 @@ class RegistrationViewSet(APIView):
             token = default_token_generator.make_token(user)
             uid = urlsafe_base64_encode(force_bytes(user.pk))
             confirm_link = f'https://smart-care-backend-3m5c.onrender.com/patient/active/{uid}/{token}'
-            print(confirm_link)
             send_confirm_email(confirm_link,'Confirm Email','confirm_email.html',user.email)
             return Response("Check your email to confirm your account")
         return Response(serializer.errors)
