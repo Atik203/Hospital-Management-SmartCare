@@ -4,7 +4,7 @@ import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
 import { FaEye, FaEyeSlash } from "react-icons/fa6";
 import { Link, useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import axiosPublic from "../../axios/axiosPublic";
 type FormData = {
   username: string;
@@ -246,6 +246,7 @@ const SignUp = () => {
           </Link>
         </p>
       </div>
+      <ToastContainer />
     </div>
   );
 };

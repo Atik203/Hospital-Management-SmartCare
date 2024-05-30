@@ -45,7 +45,7 @@ class RegistrationViewSet(APIView):
             uid = urlsafe_base64_encode(force_bytes(user.pk))
             confirm_link = f'https://smart-care-backend-3m5c.onrender.com/patient/active/{uid}/{token}'
             send_confirm_email(confirm_link,'Confirm Email','confirm_email.html',user.email)
-            return Response("Check your email to confirm your account")
+            return Response({'success': True, 'message': 'Account created successfully. Please confirm your email to login'})
         return Response(serializer.errors)
     
 def activate(request, uidb64, token):
@@ -54,13 +54,12 @@ def activate(request, uidb64, token):
         user = User._default_manager.get(pk=uid)
     except(TypeError, ValueError, OverflowError, User.DoesNotExist):
         user = None
-        
     if user is not None and default_token_generator.check_token(user, token):
         user.is_active = True
         user.save()
-        return redirect("register")
+        return Response({'success': True, 'message': 'Account activated successfully. Please login'})
     else:
-        return redirect('login')
+        return Response({'error': 'Activation link is invalid!'})
 
 
 class LoginViewSet(APIView):
