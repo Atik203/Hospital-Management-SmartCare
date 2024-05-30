@@ -2,6 +2,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import EmailMessage
+from django.http import JsonResponse
 from django.shortcuts import redirect
 from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes
@@ -57,9 +58,9 @@ def activate(request, uidb64, token):
     if user is not None and default_token_generator.check_token(user, token):
         user.is_active = True
         user.save()
-        return Response({'success': True, 'message': 'Account activated successfully. Please login'})
+        return JsonResponse({'success': True, 'message': 'Account activated successfully. Please login'})
     else:
-        return Response({'error': 'Activation link is invalid!'})
+        return JsonResponse({'error': 'Activation link is invalid!'})
 
 
 class LoginViewSet(APIView):
