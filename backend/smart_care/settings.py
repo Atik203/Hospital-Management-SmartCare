@@ -33,8 +33,10 @@ ALLOWED_HOSTS = ['*'] # all hosts
 
 CSRF_TRUSTED_ORIGINS = ['https://smart-care-backend-3m5c.onrender.com','http://127.0.0.1:8000']
 
-CORS_ALLOW_ALL_ORIGINS = True
-
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",  # Replace with the URL of your React app
+]
+CORS_ALLOW_CREDENTIALS = True
 # Application definition
 
 INSTALLED_APPS = [
@@ -61,6 +63,7 @@ REST_FRAMEWORK = {
 }
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -68,7 +71,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
+    
 
 ]
 
