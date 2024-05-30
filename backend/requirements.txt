@@ -3,6 +3,7 @@ click
 colorama
 cssbeautifier
 Django
+django-cors-headers
 django-environ
 django-filter
 djangorestframework

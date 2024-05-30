@@ -33,7 +33,7 @@ ALLOWED_HOSTS = ['*'] # all hosts
 
 CSRF_TRUSTED_ORIGINS = ['https://smart-care-backend-3m5c.onrender.com','http://127.0.0.1:8000']
 
-
+CORS_ALLOW_ALL_ORIGINS = True
 
 # Application definition
 
@@ -50,7 +50,8 @@ INSTALLED_APPS = [
     'patient',
     'appointment',
     'doctor',
-    'contact_us'
+    'contact_us',
+    'corsheaders',
 ]
 
 REST_FRAMEWORK = {
@@ -67,6 +68,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+
 ]
 
 ROOT_URLCONF = 'smart_care.urls'
