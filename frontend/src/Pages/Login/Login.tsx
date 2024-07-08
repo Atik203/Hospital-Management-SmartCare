@@ -3,10 +3,9 @@ import { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
 import { FaEye, FaEyeSlash } from "react-icons/fa6";
-import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import axiosPublic from "../../axios/axiosPublic";
-import { login } from "../../redux/features/user/userSLice";
+import { useLoginMutation } from "../../redux/features/user/userApi";
+import { useAppDispatch } from "../../redux/hooks";
 
 type FormData = {
   userName: string;
@@ -14,9 +13,9 @@ type FormData = {
 };
 
 const Login = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
-
+  const [Login] = useLoginMutation();
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const [password, setPassword] = useState<string>("");
 
@@ -26,15 +25,31 @@ const Login = () => {
     const username = data.userName;
     const password = data.password;
 
-    axiosPublic
-      .post("/patient/login/", { username: username, password: password })
+    const userInfo = {
+      username,
+      password,
+    };
+
+    Login(userInfo)
+      .unwrap()
       .then((res) => {
-        dispatch(login(res.data));
-        navigate("/");
+        console.log(res);
+        // dispatch(setUser(res));
+        // navigate("/");
       })
       .catch((error) => {
         console.log(error);
       });
+
+    // axiosPublic
+    //   .post("/patient/login/", { username: username, password: password })
+    //   .then((res) => {
+    //     dispatch(login(res.data));
+    //     navigate("/");
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
   });
 
   return (
